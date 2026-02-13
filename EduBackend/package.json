@@ -1,0 +1,36 @@
+{
+  "name": "edubackend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Chirag240105/EduTechPlatform#readme",
+  "bugs": {
+    "url": "https://github.com/Chirag240105/EduTechPlatform/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chirag240105/EduTechPlatform.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.13.5",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.4",
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.11",
+    "openai": "^6.21.0",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^5.4.530"
+  }
+}
