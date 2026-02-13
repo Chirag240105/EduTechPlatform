@@ -22,11 +22,7 @@ export const generateWithAI = async (prompt, options = {}) => {
 
   try {
     const response = await ai.chat.completions.create({
-      model: "openrouter/free",           // ← smart router to free models (recommended)
-      // Alternative good free models:
-      // model: "stepfun/step-3.5-flash:free",
-      // model: "arcee-ai/trinity-large-preview:free",
-      // model: "z-ai/glm-4.5-air:free",
+      model: "openrouter/free",           
 
       messages: [{
         role: "user",
@@ -34,7 +30,7 @@ export const generateWithAI = async (prompt, options = {}) => {
       }],
       temperature: 0.7,
       max_tokens: 2048,
-      ...options,                       // allow overrides if needed
+      ...options,                      
     });
 
     const content = response?.choices?.[0]?.message?.content;
