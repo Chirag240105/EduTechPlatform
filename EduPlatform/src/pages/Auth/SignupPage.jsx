@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import toast from "react-hot-toast";
+import {toast} from "react-toastify";
 import { validateEmail } from "../../utils/helper.js";
 import axiosInstances from "../../utils/axiosInstances.js";
 import API_PATH from "../../utils/APIpath.js";
@@ -56,10 +56,20 @@ const SignupPage = () => {
       }
     } catch (error) {
       console.log("Error in logging : ", error);
-      toast.error(error?.response?.data?.message || "Login failed");
-    }
+    
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message;
+    
+      if (status === 402) {
+        toast.error(message || "Email already registered");
+        navigate('/login')
+      } else if (status === 500) {
+        toast.error("Server error 🚨");
+      } else {
+        toast.error(message || "Login failed");
+      }
   };
-
+  }
   return (
     <div className="min-h-screen w-full bg-blue-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-lg p-8 space-y-6">

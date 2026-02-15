@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
-import toast from "react-hot-toast";
+import {toast} from "react-toastify";
 import { getQuizById } from "../../Services/quizService";
 import { submitQuiz } from "../../Services/quizService";
 import { Loader2, ChevronRight, ChevronLeft } from "lucide-react";
@@ -51,7 +51,7 @@ export default function QuizTakePage() {
 
   const handleSubmit = async () => {
     const unanswered = questions.length - answers.length;
-    if (unanswered > 0 && !window.confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
+    if (unanswered > 0 && !toast.warn(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
     setSubmitting(true);
     try {
       await submitQuiz(id, answers);

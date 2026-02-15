@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import toast from "react-hot-toast";
+import {toast} from "react-toastify";
 import { validateEmail } from "../../utils/helper.js";
 import axiosInstances from "../../utils/axiosInstances.js";
 import API_PATH from "../../utils/APIpath.js";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/Context.jsx";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-
+import { errorHandle } from "../../utils/errorHandling.js";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -16,12 +16,11 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
-      toast("Enter Email");
+      toast.warning("Enter Email");
       setError("Please enter valid email");
       return;
     }
@@ -39,7 +38,9 @@ const LoginPage = () => {
         email,
         password,
       });
-
+      if(response.status === 201){
+        toast.success("Successfully loggedIn ✅")
+      }
       const { token, user } = response.data;
       if (token && user) {
         localStorage.setItem("token", token);
@@ -47,9 +48,19 @@ const LoginPage = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.log("Error in logging : ", error);
-      toast.error(error?.response?.data?.message || "Login failed");
-    }
+  console.log("Error in logging : ", error);
+
+  const status = error?.response?.status;
+  const message = error?.response?.data?.message;
+
+  if (status === 401 || status === 402) {
+    toast.error(message || "Invalid email or password ❌");
+  } else if (status === 500) {
+    toast.error("Server error 🚨");
+  } else {
+    toast.error(message || "Login failed");
+  }
+}
   };
 
   return (
@@ -63,7 +74,7 @@ const LoginPage = () => {
           <p className="text-sm text-red-500 text-center">{error}</p>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
+        <form onSubmit={handleLogin}  className="space-y-5">
           <div className="flex flex-col space-y-1">
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
               Email

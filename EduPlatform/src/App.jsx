@@ -13,6 +13,7 @@ import FlashCard from "./pages/flashcard/FlashCard";
 import QuizListPage from "./pages/Quizzes/QuizListPage";
 import QuizTakePage from "./pages/Quizzes/QuizTakePage";
 import QuizResultPage from "./pages/Quizzes/QuizResultPage";
+import { ToastContainer } from "react-toastify";
 
 function PublicOnlyRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -23,6 +24,7 @@ function PublicOnlyRoute({ children }) {
 const App = () => {
   return (
     <Router>
+        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
       <Routes>
         <Route path="/login" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
         <Route path="/signup" element={<PublicOnlyRoute><SignupPage /></PublicOnlyRoute>} />

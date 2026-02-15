@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { gsap } from "gsap";
-import toast from "react-hot-toast";
+import {toast} from "react-toastify";
 import { getDocuments } from "../../Services/documentService";
 import { getQuizzesByDocument } from "../../Services/quizService";
 import { deleteQuiz } from "../../Services/quizService";
@@ -28,15 +28,15 @@ export default function QuizListPage() {
     loadDocs();
   }, []);
 
-  useEffect(() => {
-    if (!documentId) {
+  const quizFun = async() =>{
+     if (!documentId) {
       setQuizzes([]);
       setLoading(false);
       return;
     }
     let cancelled = false;
     setLoading(true);
-    getQuizzesByDocument(documentId)
+    await getQuizzesByDocument(documentId)
       .then((res) => {
         if (!cancelled) setQuizzes(res.data?.data ?? []);
       })
@@ -47,6 +47,10 @@ export default function QuizListPage() {
         if (!cancelled) setLoading(false);
       });
     return () => { cancelled = true; };
+  }
+
+  useEffect(() => {
+  quizFun()
   }, [documentId]);
 
   useEffect(() => {

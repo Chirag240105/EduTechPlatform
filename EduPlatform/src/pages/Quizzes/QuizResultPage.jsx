@@ -48,7 +48,7 @@ export default function QuizResultPage() {
   const percentage = total ? Math.round((score / total) * 100) : 0;
   const userAnswers = quiz.userAnswer ?? [];
   const questions = quiz.questions ?? [];
-
+  const correctAns = quiz.correctAnswer;
   return (
     <div className="max-w-2xl mx-auto">
       <div ref={resultRef} className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] border border-[var(--color-border)] p-6 md:p-8 mb-8">
@@ -106,6 +106,9 @@ export default function QuizResultPage() {
                       <p className="font-medium text-[var(--color-text)]">{q.question}</p>
                       <p className="text-sm text-[var(--color-text-muted)] mt-1">
                         Your answer: {ua?.selectedAnswer ?? "—"}
+                      </p>
+                      <p className="text-sm text-[var(--color-text-muted)] mt-1">
+                        Your answer: {ua?.correctAnswer ?? "—"}
                       </p>
                     </div>
                   </div>
