@@ -14,11 +14,11 @@ export const signUp = async(req, res) =>{
         const user =await User.findOne({email})
         
         if(user){
-            return res.status(400).json({
+            return res.status(402).json({
                 success: false,
                 error: user.email === email ? "Email already registered": "Username already taken",
-                mesasge : "This email already exists",
-                statusCode: 400,
+                message : "This email already exists",
+                statusCode: 402,
             });
 
         }
@@ -34,7 +34,6 @@ export const signUp = async(req, res) =>{
                 id: NewUser._id,
                 name: NewUser.name,
                 email: NewUser.email,
-                profileImage: user.profileImage,
                 createdAt: NewUser.createdAt,
             },
             token,
@@ -49,7 +48,7 @@ export const signUp = async(req, res) =>{
 export const login = async(req, res) =>{
     const {email, password} = req.body;
     if(!email || !password){
-        return res.status(401).json({message:"All fields are required"});
+        return res.status(400).json({message:"All fields are required"});
     }
     try{
         const user =await User.findOne({email})
@@ -65,8 +64,7 @@ export const login = async(req, res) =>{
             user:{
                 id: user._id,
                 name: user.name,
-                email: user.email,
-                profileImage: user.profileImage     
+                email: user.email
             },
             token : generateToken(user._id),
             message: "Successfully logged in"
@@ -82,7 +80,7 @@ export const getInfo = async(req, res) =>{
         if(!user){
             return res.status(404).json({message : "User not found"})
         }
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             data:{
                 id: user._id,

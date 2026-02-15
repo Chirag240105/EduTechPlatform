@@ -4,7 +4,7 @@ import { Quiz } from "../Models/quiz.js";
 import { ChatHistory } from "../Models/chatHistory.js";
 import { generateWithAI } from "../Config/utils/geminiService.js";
 
-const getDocumentContext = async (documentId, userId, maxChars = 8000) => {
+const getDocumentContext = async (documentId, userId, maxChars = 12000) => {
   const document = await Document.findOne({
     _id: documentId,
     userId,
@@ -32,15 +32,9 @@ export const generateFlashcards = async (req, res) => {
       });
     }
 
-    const prompt = `You are an educational assistant. Generate flashcards from the following document content.
-
-Return ONLY a valid JSON array. Each item must have: question (string), answer (string), difficulty ("easy"|"medium"|"hard").
-Generate 6-10 flashcards. No other text, only the JSON array.
-
-DOCUMENT:
-${context}
-
-Example format: [{"question":"...","answer":"...","difficulty":"medium"},...]`;
+    const prompt = `Return only a valid JSON array of 6–10 flashcards from the document. Each item must include: "question" (string), "answer" (string), and "difficulty" ("easy" | "medium" | "hard"). No extra text.
+Document:
+${context}`;
 
     const raw = await generateWithAI(prompt);
     const jsonMatch = raw.match(/\[[\s\S]*\]/);
@@ -91,17 +85,10 @@ export const genarateQuiz = async (req, res) => {
       });
     }
 
-    const prompt = `You are an educational assistant. Generate a quiz from the following document.
+    const prompt = `Return only a valid JSON object for a quiz from the document. Include "title" (string) and "questions" (array of 5–10 items). Each question must have: "question" (string), "options" (exactly 4 strings), "correctAnswer" (must exactly match one option), and "difficulty" ("easy" | "medium" | "hard"). Keep answers concise and relevant. No extra text.
 
-Return ONLY a valid JSON object with:
-- title: string (quiz title)
-- questions: array of {question: string, options: string[4], correctAnswer: string, difficulty: "easy"|"medium"|"hard"}
-Generate 5-10 questions. No other text, only the JSON.
-
-DOCUMENT:
-${context}
-
-Example: {"title":"...","questions":[{"question":"...","options":["A","B","C","D"],"correctAnswer":"A","difficulty":"medium"}]}`;
+Document:
+${context}`;
 
     const raw = await generateWithAI(prompt);
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
@@ -218,8 +205,15 @@ export const chat = async (req, res) => {
     const historyStr = recentMessages
       .map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.content}`)
       .join("\n");
+const prompt = `You are an AI tutor.
 
-    const prompt = `You are an AI tutor. Answer questions strictly based on the document. If the answer is not in the document, say so.
+Answer the user's question based on the provided document. If the answer is not found in the document, use your general knowledge to respond accurately.
+
+Guidelines:
+- Keep answers clear and concise
+- Explain in simple terms
+- Do not make up information
+- Use the previous conversation for context if relevant
 
 DOCUMENT:
 ${context}
@@ -228,6 +222,7 @@ ${historyStr ? `Previous conversation:\n${historyStr}\n\n` : ""}
 User: ${message}
 
 Assistant:`;
+
 
     const assistantReply = await generateWithAI(prompt);
 
@@ -269,12 +264,12 @@ export const explainConcept = async (req, res) => {
       });
     }
 
-    const prompt = `You are an AI tutor. Explain the concept "${concept}" using only information from the document below. Be clear and educational.
+   const prompt = `Explain "${concept}" using the document. If not found, use general knowledge. Keep it clear and simple.
 
 DOCUMENT:
 ${context}
 
-Explanation of "${concept}":`;
+Answer:`;
 
     const explanation = await generateWithAI(prompt);
 

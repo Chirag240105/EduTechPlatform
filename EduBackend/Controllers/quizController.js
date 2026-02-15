@@ -86,20 +86,20 @@ export const submitQuiz = async (req, res) => {
 
     const userAnswers = [];
     let correctCount = 0;
-
+    let val = [];
     for (const a of answers) {
       const qIndex = a.questionIndex ?? a.question_index;
       const selected = a.selectedAnswer ?? a.selected_answer;
       const question = quiz.questions[qIndex];
-
+      val.push(question.correctAnswer)
       if (!question) continue;
 
       const isCorrect = question.correctAnswer === selected;
       if (isCorrect) correctCount++;
-
       userAnswers.push({
         questionIndex: qIndex,
         selectedAnswer: selected,
+        correctAnswer: question.correctAnswer,
         isCorrect,
       });
     }
@@ -117,6 +117,7 @@ export const submitQuiz = async (req, res) => {
         totalQuestions: quiz.totalQuestions,
         percentage: Math.round((correctCount / quiz.totalQuestions) * 100),
         completedAt: quiz.completedAt,
+        val
       },
     });
   } catch (err) {

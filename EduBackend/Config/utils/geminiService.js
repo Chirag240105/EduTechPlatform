@@ -22,14 +22,14 @@ export const generateWithAI = async (prompt, options = {}) => {
 
   try {
     const response = await ai.chat.completions.create({
-      model: "openrouter/free",           
+      model: "meta-llama/llama-4-maverick",           
 
       messages: [{
         role: "user",
         content: prompt,
       }],
       temperature: 0.7,
-      max_tokens: 2048,
+      max_tokens: 2040,
       ...options,                      
     });
 
