@@ -33,7 +33,7 @@ app.use("/api/document", documentRoute)
 app.use("/api/ai", aiRoute)
 app.use("/api/flashcard", flashcardRoute)
 app.use("/api/quiz", quizRoute)
-app.use("/api/progress", progress )
+app.use("/api/progress", progress)
 const port = process.env.PORT || 4000;
 connectDB();
 app.listen(port, (req, res) => {

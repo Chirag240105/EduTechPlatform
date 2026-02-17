@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
-import toast from "react-hot-toast";
+import {toast} from "react-toastify";
 import { getProgress } from "../../Services/progressService";
 import { getDocuments } from "../../Services/documentService";
 import { uploadDocument } from "../../Services/documentService";
@@ -106,7 +106,6 @@ export default function DashBoardPage() {
         <p className="text-[var(--color-text-muted)] mt-1">Your learning overview</p>
       </div>
 
-      {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" ref={(el) => { if (el) cardsRef.current = el.children; }}>
         {statCards.map(({ key, label, icon: Icon, color, iconColor }) => (
           <div
@@ -124,7 +123,6 @@ export default function DashBoardPage() {
         ))}
       </div>
 
-      {/* Upload */}
       <section className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] border border-[var(--color-border)] p-4 md:p-6">
         <h2 className="text-lg font-semibold text-[var(--color-text)] flex items-center gap-2">
           <Upload className="w-5 h-5" />
@@ -159,7 +157,7 @@ export default function DashBoardPage() {
       </section>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Recent documents */}
+      
         <section className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] border border-[var(--color-border)] p-4 md:p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-[var(--color-text)]">Recent documents</h2>
@@ -183,7 +181,7 @@ export default function DashBoardPage() {
           </ul>
         </section>
 
-        {/* Recent quizzes */}
+     
         <section className="rounded-[var(--radius-lg)] bg-[var(--color-surface)] border border-[var(--color-border)] p-4 md:p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-[var(--color-text)]">Recent quizzes</h2>
