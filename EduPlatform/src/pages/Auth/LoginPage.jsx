@@ -2,12 +2,11 @@ import React, { useContext, useState } from "react";
 import {toast} from "react-toastify";
 import { validateEmail } from "../../utils/helper.js";
 import axiosInstances from "../../utils/axiosInstances.js";
-import API_PATH from "../../utils/APIpath.js";
+import API_PATH, { BASE_URL } from "../../utils/APIpath.js";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/Context.jsx";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { errorHandle } from "../../utils/errorHandling.js";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +33,7 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await axiosInstances.post(API_PATH.AUTH.LOGIN, {
+      const response = await axiosInstances.post(BASE_URL + API_PATH.AUTH.LOGIN, {
         email,
         password,
       });
