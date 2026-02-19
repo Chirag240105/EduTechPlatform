@@ -37,6 +37,8 @@ const LoginPage = () => {
         email,
         password,
       });
+      console.log("LOGIN URL:",API_PATH.AUTH.LOGIN);
+
       if(response.status === 201){
         toast.success("Successfully loggedIn ✅")
       }
