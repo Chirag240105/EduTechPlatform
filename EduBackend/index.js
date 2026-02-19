@@ -11,6 +11,7 @@ import aiRoute from './Routes/aiRoutes.js';
 import flashcardRoute from './Routes/flashcardRoutes.js';
 import quizRoute from './Routes/quizRoutes.js';
 import progress from './Routes/ProgressRoutes.js'
+import { log } from 'console';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename);
 
