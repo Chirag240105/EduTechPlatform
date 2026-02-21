@@ -34,7 +34,7 @@ const axiosInstances = axios.create({
             window.location.href = "/login";
         } else if (error.response.status === 500) {
             console.error("Server error (500). Please try again later.");
-            // Optional: alert("Something went wrong on server. Try later.")
+            
         }
     } else if (error.code === "ECONNABORTED") {
         console.error("Request timeout. Please check your connection.");

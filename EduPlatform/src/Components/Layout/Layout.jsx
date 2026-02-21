@@ -119,7 +119,7 @@ export default function Layout({ children }) {
               {user?.name}
             </div>
             <div className="px-3 py-2 text-[16px] text-[var(--color-text-muted)] truncate">
-              {user.email}
+              {user?.email}
             </div>
             <button
               type="button"
