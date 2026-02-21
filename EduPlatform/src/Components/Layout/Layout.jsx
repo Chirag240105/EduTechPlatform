@@ -21,7 +21,7 @@ const navItems = [
 ];
 
 export default function Layout({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const { user, logout } = React.useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -116,7 +116,10 @@ export default function Layout({ children }) {
           </nav>
           <div className="p-3 border-t border-[var(--color-border)]">
             <div className="px-3 py-2 text-[16px] text-[var(--color-text-muted)] truncate">
-              {user?.name || user?.email || "User"}
+              {user?.name}
+            </div>
+            <div className="px-3 py-2 text-[16px] text-[var(--color-text-muted)] truncate">
+              {user.email}
             </div>
             <button
               type="button"
