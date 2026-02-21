@@ -28,25 +28,36 @@ export default function Layout({ children }) {
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
 
-    useEffect(() => {
-    if (sidebarOpen && sidebarRef.current) {
-      gsap.fromTo(
-        sidebarRef.current,
-        { x: -280 },
-        { x: 0, duration: 0.3, ease: "power2.out" }
-      );
-    }
-  }, [sidebarOpen]);
+useEffect(() => {
+  if (!sidebarRef.current) return;
 
-  useEffect(() => {
-    if (sidebarOpen && overlayRef.current) {
-      gsap.fromTo(
-        overlayRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.2 }
-      );
-    }
-  }, [sidebarOpen]);
+  const isMobile = window.innerWidth < 768;
+
+  if (!isMobile) return; // ❗ Don't animate on desktop
+
+  if (sidebarOpen) {
+    gsap.to(sidebarRef.current, {
+      x: 0,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  } else {
+    gsap.to(sidebarRef.current, {
+      x: -280,
+      duration: 0.3,
+      ease: "power2.in",
+    });
+  }
+}, [sidebarOpen]);
+useEffect(() => {
+  if (!overlayRef.current) return;
+
+  if (sidebarOpen) {
+    gsap.to(overlayRef.current, { opacity: 1, duration: 0.2 });
+  } else {
+    gsap.to(overlayRef.current, { opacity: 0, duration: 0.2 });
+  }
+}, [sidebarOpen]);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -82,16 +93,16 @@ export default function Layout({ children }) {
 
  
       <aside
-        ref={sidebarRef}
-        className={`
-          fixed md:static inset-y-0 left-0 z-50
-          w-[280px] flex-shrink-0
-          bg-[var(--color-surface)] border-r border-[var(--color-border)]
-          transform transition-transform duration-300 ease-out
-          md:translate-x-0
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
-        `}
-      >
+  ref={sidebarRef}
+  className="
+    fixed md:static inset-y-0 left-0 z-50
+    w-[280px] flex-shrink-0
+    bg-[var(--color-surface)] border-r border-[var(--color-border)]
+  "
+  style={{
+    transform: window.innerWidth < 768 ? "translateX(-280px)" : "translateX(0)",
+  }}
+>
         <div className="flex flex-col h-full">
           <div className="p-[13px] flex items-center justify-between border-b border-[var(--color-border)]">
             <Link to="/dashboard" className="font-semibold text-[20px] text-[var(--color-text)]">
