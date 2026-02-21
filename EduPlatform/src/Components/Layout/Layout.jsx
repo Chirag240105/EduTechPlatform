@@ -21,29 +21,38 @@ const navItems = [
 ];
 
 export default function Layout({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = React.useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
 
-  useEffect(() => {
-    if (sidebarOpen && sidebarRef.current) {
-      gsap.fromTo(
-        sidebarRef.current,
-        { x: -280, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
-      );
+useEffect(() => {
+    if (!sidebarRef.current) return;
+
+    if (sidebarOpen) {
+      gsap.to(sidebarRef.current, {
+        x: 0,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+
+      if (overlayRef.current) {
+        gsap.to(overlayRef.current, { opacity: 1, duration: 0.2 });
+      }
+    } else {
+      gsap.to(sidebarRef.current, {
+        x: -280,
+        duration: 0.3,
+        ease: "power2.in",
+      });
+
+      if (overlayRef.current) {
+        gsap.to(overlayRef.current, { opacity: 0, duration: 0.2 });
+      }
     }
-    if (sidebarOpen && overlayRef.current) {
-      gsap.fromTo(
-        overlayRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.2 }
-      );
-    }
-  }, [sidebarOpen]);
+  }, [[location.pathname]]);
 
   const handleLogout = () => {
     logout();
