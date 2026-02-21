@@ -28,31 +28,39 @@ export default function Layout({ children }) {
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
 
-useEffect(() => {
-    if (!sidebarRef.current) return;
-
-    if (sidebarOpen) {
-      gsap.to(sidebarRef.current, {
-        x: 0,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-
-      if (overlayRef.current) {
-        gsap.to(overlayRef.current, { opacity: 1, duration: 0.2 });
-      }
-    } else {
-      gsap.to(sidebarRef.current, {
-        x: -280,
-        duration: 0.3,
-        ease: "power2.in",
-      });
-
-      if (overlayRef.current) {
-        gsap.to(overlayRef.current, { opacity: 0, duration: 0.2 });
-      }
+    useEffect(() => {
+    if (sidebarOpen && sidebarRef.current) {
+      gsap.fromTo(
+        sidebarRef.current,
+        { x: -280 },
+        { x: 0, duration: 0.3, ease: "power2.out" }
+      );
     }
-  }, [[location.pathname]]);
+  }, [sidebarOpen]);
+
+  useEffect(() => {
+    if (sidebarOpen && overlayRef.current) {
+      gsap.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.2 }
+      );
+    }
+  }, [sidebarOpen]);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") setSidebarOpen(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -62,7 +70,7 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[var(--color-bg)]">
-      {/* Mobile overlay */}
+      
       {sidebarOpen && (
         <div
           ref={overlayRef}
@@ -72,7 +80,7 @@ useEffect(() => {
         />
       )}
 
-      {/* Sidebar */}
+ 
       <aside
         ref={sidebarRef}
         className={`
@@ -142,7 +150,6 @@ useEffect(() => {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="sticky top-0 z-30 flex items-center gap-3 h-14 px-4 bg-[var(--color-bg)]/80 backdrop-blur border-b border-[var(--color-border)]">
           <button
