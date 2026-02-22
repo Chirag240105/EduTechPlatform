@@ -16,7 +16,7 @@ Review and track progress
 
 Interact with intelligent AI explanations
 
-The system integrates openRouter(llama) API with a secure MERN-based architecture to deliver structured, dynamic learning experiences.
+The system integrates openRouter(llama 4 maverick) API with a secure MERN-based architecture to deliver structured, dynamic learning experiences.
 ```
 🚀 Key Features
 ```
