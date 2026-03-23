@@ -225,10 +225,32 @@ File storage integration (Cloudinary)
 
 Admin management panel
 ```
-👨‍💻 Developer
-```
-Chirag Pandey
-MERN Stack Developer | AI Learning Systems Enthusiast
+👥 Contributors
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/jackstealer">
+        <img src="https://github.com/jackstealer.png" width="100px;" alt="Atul"/><br />
+        <sub><b>Atul</b></sub>
+      </a><br />
+      🤖 Machine Learning
+    </td>
+    <td align="center">
+      <a href="https://github.com/arpitpandey0307">
+        <img src="https://github.com/arpitpandey0307.png" width="100px;" alt="Arpit Pandey"/><br />
+        <sub><b>Arpit Pandey</b></sub>
+      </a><br />
+      🤖 AI / ML
+    </td>
+    <td align="center">
+      <a href="https://github.com/SinghCharanjeet11">
+        <img src="https://github.com/SinghCharanjeet11.png" width="100px;" alt="Charanjeet Singh"/><br />
+        <sub><b>Charanjeet Singh</b></sub>
+      </a><br />
+      🎨 Frontend
+    </td>
+  </tr>
+</table>Stack Developer | AI Learning Systems Enthusiast
 ```
 📜 License
 ```
