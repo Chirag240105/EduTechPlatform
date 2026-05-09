@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import { User } from "../Models/User.Models.js";
 
-const connectDB = async( req, res) =>{
+const connectDB = async() =>{
     try{
         await mongoose.connect(process.env.MONGO_URI);
         console.log("MongoDB connection was successfully estanblish")

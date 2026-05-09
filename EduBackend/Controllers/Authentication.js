@@ -99,11 +99,11 @@ export const getInfo = async(req, res) =>{
 }
 export const updateProfile = async(req, res) =>{
     try{
-    const {name, email, profileImage} = req.body;
+    const {name, email} = req.body;
         const user = await User.findById(req.user._id)
         if(name) user.name = name;
         if(email) user.email = email;
-        if(profileImage) user.profileImage = profileImage;
+        // if(profileImage) user.profileImage = profileImage;
         await user.save();
         res.status(200).json({
             message: "Successfully updated",
@@ -111,7 +111,7 @@ export const updateProfile = async(req, res) =>{
                 id:user._id,
                 name: user.name,
                 email: user.email,
-                profileImage: user.profileImage,
+                // profileImage: user.profileImage,
             },
         })
     }catch(error){

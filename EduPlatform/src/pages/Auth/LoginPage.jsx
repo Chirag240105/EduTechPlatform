@@ -124,6 +124,19 @@ const LoginPage = () => {
           </button>
         </form>
 
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-gray-600 space-y-1">
+          <p className="font-semibold text-gray-700">Demo Credentials</p>
+          <p>📧 <span className="font-mono">chirag@mail.com</span></p>
+          <p>🔑 <span className="font-mono">123456789</span></p>
+          <button
+            type="button"
+            onClick={() => { setEmail("chirag@mail.com"); setPassword("123456789"); }}
+            className="mt-2 text-blue-600 hover:underline text-xs font-medium"
+          >
+            Click to autofill
+          </button>
+        </div>
+
         <a href="/signup" className="text-blue-500">Create an account? </a>
       </div>
     </div>
